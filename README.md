@@ -10,7 +10,7 @@
 
 ## 1. 配置SDL环境
 
-(SDL-1.2.15.tar.gz-一键下载)[https://sourceforge.net/projects/libsdl/files/SDL/1.2.15/SDL-1.2.15.tar.gz/download]
+[SDL-1.2.15.tar.gz-一键下载](https://sourceforge.net/projects/libsdl/files/SDL/1.2.15/SDL-1.2.15.tar.gz/download)
 
 ```bash
 tar -zxvf SDL-1.2.15.tar.gz
