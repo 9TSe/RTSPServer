@@ -4,6 +4,9 @@ Base 文件为 RTSP 的准备和知识基础(即使相较于RTSP_Server难度差
 
 只能简单的将视频和音频搓在一起, 并不能保证音视频完全同步, 只是作为练手熟悉基本框架
 
+RTSPClient的作用是从RTSPServer拉流(项目中相互的推拉流目前未尝试, Client使用的server是zlm)
+
+以下介绍的是RTSPServer
 ---
 
 # Linux环境中运行
