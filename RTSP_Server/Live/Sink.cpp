@@ -29,7 +29,7 @@ Sink::~Sink()
 {
 	LOGI("~Sink()");
 	delete m_timeEvent;
-	delete m_mediaSource; //why delete it
+	delete m_mediaSource;
 }
 
 void Sink::timeoutCallback(void* arg)

@@ -6,7 +6,7 @@
 #include <queue>
 
 constexpr int FRAME_DEFAULT_NUM = 4;
-constexpr int FRAME_MAX_SIZE = 500 * 1024;
+constexpr int FRAME_MAX_SIZE = 600 * 1024;
 
 
 class MediaFrame

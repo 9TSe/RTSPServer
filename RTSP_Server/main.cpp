@@ -13,10 +13,8 @@
 int main()
 {
 	/*
-	程序初始化了一份session名为test的资源，访问路径:
 	//tcp
 	ffplay -i -rtsp_transport tcp  rtsp://127.0.0.1:8554/test
-
 	//udp
 	ffplay -i rtsp://127.0.0.1:8554/test
 	*/
@@ -39,7 +37,6 @@ int main()
 	source = AACMediaSource::createNew(env, R"(/home/ninetse/avsource/miku2.aac)");
 	sink = AACSink::createNew(env, source);
 	mediasession->addSink(MediaSession::TRACK_ID1, sink);
-
 
 	sessionmanager->addSession(mediasession);
 	LOGI("---session end---");
