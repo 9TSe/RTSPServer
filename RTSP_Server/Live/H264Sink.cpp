@@ -37,7 +37,7 @@ std::string H264Sink::getAtrribute()
 	return buf;
 }
 
-void H264Sink::sendFrame(MediaFrame* frame) //what is frame
+void H264Sink::sendFrame(MediaFrame* frame)
 {
 	uint8_t nalu = frame->m_buf[0];
 	if (frame->m_size <= RTPPKT_MAX_SIZE) //one nalu packet
@@ -46,7 +46,8 @@ void H264Sink::sendFrame(MediaFrame* frame) //what is frame
 		m_rtppacket.m_size = RTP_HEADER_SIZE + frame->m_size;
 		sendRtpPacket(&m_rtppacket);
 		m_seq++;
-		if ((nalu & 0x1f) == 7 || (nalu & 0x1f) == 8) return; //sps pps dont need add timestamp
+		//if ((nalu & 0x1f) == 7 || (nalu & 0x1f) == 8) return; //sps pps dont need add timestamp
+		if ((nalu & 0x1f) == 6 || (nalu & 0x1f) == 7 || (nalu & 0x1f) == 8) return; //sei sps pps dont need add timestamp
 	}
 	else // more rtp load one nalu
 	{
@@ -82,7 +83,7 @@ void H264Sink::sendFrame(MediaFrame* frame) //what is frame
 			sendRtpPacket(&m_rtppacket);
 			m_seq++;
 		}
+		if ((nalu & 0x1f) == 6 || (nalu & 0x1f) == 7 || (nalu & 0x1f) == 8) return;
 	}
-
 	m_timestamp += m_clockRate / m_fps;
 }

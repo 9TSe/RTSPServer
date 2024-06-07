@@ -2,8 +2,8 @@
 
 
 TriggerEvent::TriggerEvent(void* arg)
-    :m_arg(arg)
-    , m_triggerCallback(nullptr)
+    : m_triggerCallback(nullptr)
+    , m_arg(arg)
 {
     LOGI("TriggerEvent()");
 }

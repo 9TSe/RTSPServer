@@ -1,4 +1,5 @@
 #include "ThreadPool.h"
+#include "Log.h"
 
 Thread::Thread()
 	:m_arg(nullptr)
@@ -62,6 +63,7 @@ ThreadPool::ThreadPool(int num)
 
 ThreadPool::~ThreadPool()
 {
+	LOGI("~ThreadPool()");
 	cancleThread();
 }
 

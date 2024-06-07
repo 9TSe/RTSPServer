@@ -1,6 +1,7 @@
 #pragma once
 #include "Log.h"
-using EventCallback = void(*)(void*);
+#include <functional>
+using EventCallback = std::function<void(void*)>;
 
 class TriggerEvent
 {

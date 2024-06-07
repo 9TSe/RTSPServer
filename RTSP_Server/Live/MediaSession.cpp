@@ -87,16 +87,9 @@ void MediaSession::sendPacketCallback(void* arg1, void* arg2, void* packet, Sink
 
 void MediaSession::handleSendPacket(MediaSession::Track* track, RtpPacket* rtppacket)
 {
-	/*for (auto& it : track->m_rtpinstancelist)
+	for (auto& it : track->m_rtpinstancelist)
 		if (it->getalive())
-			it->Send(rtppacket);*/
-	std::list<RtpInstance*>::iterator it;
-	for (it = track->m_rtpinstancelist.begin(); it != track->m_rtpinstancelist.end(); ++it)
-	{
-		RtpInstance* rtpinstance = *it;
-		if (rtpinstance->getalive())
-			rtpinstance->Send(rtppacket);
-	}
+			it->Send(rtppacket);
 }
 
 bool MediaSession::addRtpInstance(MediaSession::TrackId trackid, RtpInstance* rtpinstance)

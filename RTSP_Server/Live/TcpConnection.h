@@ -1,5 +1,6 @@
 #pragma once
 #include "Buffer.h"
+#include <functional>
 
 class UsageEnvironment;
 class IOEvent;
@@ -7,7 +8,7 @@ class IOEvent;
 class TcpConnection
 {
 public:
-	using DisConnectCallback = void(*)(void*, int);
+	using DisConnectCallback = std::function<void(void*, int)>;
 	TcpConnection(UsageEnvironment* env, int fd);
 	virtual ~TcpConnection();
 

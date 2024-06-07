@@ -34,6 +34,7 @@ RtspServer::RtspServer(UsageEnvironment* env, MediaSessionManager* ssmgr, IPV4Ad
 
 RtspServer::~RtspServer()
 {
+	LOGI("~RtspServer()");
 	if (m_listen)
 		m_env->eventScheduler()->removeIOEvent(m_acceptIOEvent);
 	delete m_acceptIOEvent;

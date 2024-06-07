@@ -5,6 +5,7 @@
 #include "../Scheduler/Event.h"
 #include "MediaSource.h"
 #include <string>
+#include <functional>
 
 
 class Sink
@@ -15,7 +16,7 @@ public:
 		UNKNOWN = -1,
 		RTPPACKET = 0
 	};
-	using SessionSendPacketCallback = void(*)(void* arg1, void* arg2, void* packet, PacketType type);
+	using SessionSendPacketCallback = std::function<void(void* arg1, void* arg2, void* packet, PacketType type)>;
 
 	explicit Sink(UsageEnvironment* env, MediaSource* source, int payloadtype);
 	virtual ~Sink();

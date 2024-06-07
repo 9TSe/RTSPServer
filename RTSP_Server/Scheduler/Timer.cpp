@@ -101,8 +101,7 @@ void TimerManager::handleRead()
 		auto it = m_events.begin();
 		Timer timer = it->second;
 		int64_t expire = timer.m_timestamp - stamp;
-		//if (expire <= 0) //before
-		if(timer.m_timestamp < stamp || expire == 0)
+		if (expire <= 0) //before
 		{
 			bool timevent_isStop = timer.handleEvent(); //exe -> false
 			m_events.erase(it);

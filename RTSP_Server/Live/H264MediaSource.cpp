@@ -14,14 +14,15 @@ H264MediaSource::H264MediaSource(UsageEnvironment* env, const std::string& file)
 {
 	m_sourcename = file;
 	m_istream.open(file, std::ios::in | std::ios::binary);
-	setFps(25);
+	setFps(57);
 
-	for (int i = 0; i < FRAME_DEFAULT_NUM; ++i) //why for
+	for (int i = 0; i < FRAME_DEFAULT_NUM; ++i)
 		m_env->threadPool()->addTask(m_task);
 }
 
 H264MediaSource::~H264MediaSource()
 {
+	LOGI("~H264MediaSource()");
 	m_istream.close();
 }
 
@@ -53,7 +54,7 @@ static uint8_t* findNextstartcode(uint8_t* buf, int len)
 int H264MediaSource::getFrameFromH264(uint8_t* frame, int size)
 {
 	if (!m_istream.is_open()) return -1;
-	m_istream.read(reinterpret_cast<char*>(frame), size); //not assure ret == fread
+	m_istream.read(reinterpret_cast<char*>(frame), size);
 	int ret = m_istream.gcount();
 
 	if (!startcode3(frame) && !startcode4(frame))
@@ -69,7 +70,8 @@ int H264MediaSource::getFrameFromH264(uint8_t* frame, int size)
 	{
 		m_istream.seekg(0, std::ios::beg);
 		LOGE("read error, %s not next startcode", m_sourcename.c_str());
-		framesize = ret;
+		//framesize = ret;
+		return -1;
 	}
 	else
 	{
@@ -84,7 +86,6 @@ void H264MediaSource::handleTask()
 	std::lock_guard<std::mutex> mutex(m_mutex);
 	if (m_inqueueFrame.empty()) return;
 	MediaFrame* frame = m_inqueueFrame.front();
-	//m_inqueueFrame.pop();
 	int startcodenum = 0;
 	while (true)
 	{
@@ -99,7 +100,7 @@ void H264MediaSource::handleTask()
 
 		uint8_t nalutype = frame->m_buf[0] & 0x1f;
 		if (nalutype == 0x09) continue; //AUD
-		else if (nalutype == 0x07 || nalutype == 0x08) break; //sps pps
+		else if (nalutype == 0x06 || nalutype == 0x07 || nalutype == 0x08) break; //sei sps pps
 		else break;
 	}
 	m_inqueueFrame.pop();

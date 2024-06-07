@@ -13,4 +13,6 @@ UsageEnvironment* UsageEnvironment::createNew(ThreadPool* threadpool, EventSched
 }
 
 UsageEnvironment::~UsageEnvironment()
-{}
+{
+	LOGI("~UsageEnvironment()");
+}

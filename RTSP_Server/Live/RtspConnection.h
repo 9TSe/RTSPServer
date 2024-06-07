@@ -2,7 +2,7 @@
 #include "TcpConnection.h"
 #include "MediaSession.h"
 
-constexpr char* RTSPVERSION = "NineTSe_RTSPServer";
+constexpr const char* RTSPVERSION = "NineTSe_RTSPServer";
 
 class RtspServer;
 class RtspConnection : public TcpConnection
@@ -51,7 +51,7 @@ private:
 	RtpInstance* m_rtpinstances[MAX_TRACK_NUM];
 	RtcpInstance* m_rtcpinstances[MAX_TRACK_NUM];
 	std::string m_peerip;
-	std::string m_suffix; //what
+	std::string m_suffix; 
 	std::string m_url;
 	uint32_t m_cseq;
 	uint8_t m_rtpChannel;

@@ -59,6 +59,6 @@ void AACSink::sendFrame(MediaFrame* frame)
 	m_rtpPacket.m_size = RTP_HEADER_SIZE + 4 + framesize;
 	sendRtpPacket(&m_rtpPacket);
 	m_seq++;
-	m_timestamp += m_sampleRate * (1000 / m_fps) / 1000;  //1025
-	//m_timestamp += (m_sampleRate / 1024) * (1000 / m_fps); //every second time 1001
+	//m_timestamp += m_sampleRate * (1000 / m_fps) / 1000;  //1025
+	m_timestamp += (m_sampleRate / 1024) * (1000 / m_fps); //every second time 1001
 }

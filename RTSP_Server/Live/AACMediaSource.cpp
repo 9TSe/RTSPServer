@@ -19,6 +19,7 @@ AACMediaSource::AACMediaSource(UsageEnvironment* env, const std::string& file)
 
 AACMediaSource::~AACMediaSource()
 {
+	LOGI("~AACMediaSource()");
 	m_istream.close();
 }
 
@@ -87,7 +88,6 @@ void AACMediaSource::handleTask()
 	std::lock_guard<std::mutex> mutex(m_mutex);
 	if (m_inqueueFrame.empty()) return;
 	MediaFrame* frame = m_inqueueFrame.front();
-	//m_inqueueFrame.pop(); //early pop??
 	frame->m_size = getFrameFromAACFile(frame->m_temp, FRAME_MAX_SIZE);
 	if (frame->m_size < 0) return;
 	frame->m_buf = frame->m_temp;

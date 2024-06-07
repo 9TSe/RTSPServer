@@ -16,6 +16,7 @@ EventScheduler::EventScheduler()
 
 EventScheduler::~EventScheduler()
 {
+	LOGI("~EventScheduler");
 	delete m_epoll;
 	delete m_timerManager;
 }

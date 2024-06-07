@@ -102,27 +102,10 @@ void Buffer::append(const void* data, int len)
 
 int Buffer::read(int fd)
 {
-	/*char* recvbuf[65536];
+	char* recvbuf[65536];
 	int n = ::recv(fd, recvbuf, sizeof(recvbuf), 0);
 	if (n <= 0) return -1;
 	else append(recvbuf, n);
-	return n;*/
-	char extra_buf[65536];
-	const int writable = writeable();
-	const int n = ::recv(fd, extra_buf, sizeof(extra_buf), 0);
-	if (n <= 0)
-		return -1;
-	else if (n <= writable)
-	{
-		std::copy(extra_buf, extra_buf + n, beginwrite());
-		m_writeindex += n;
-	}
-	else
-	{
-		std::copy(extra_buf, extra_buf + writable, beginwrite());
-		m_writeindex += writable;
-		append(extra_buf + writable, n - writable);
-	}
 	return n;
 }
 

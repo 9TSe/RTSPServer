@@ -2,7 +2,10 @@
 #include "MediaSession.h"
 
 MediaSessionManager::MediaSessionManager(){}
-MediaSessionManager::~MediaSessionManager(){}
+MediaSessionManager::~MediaSessionManager()
+{
+	LOGI("~MediaSessionManager()");
+}
 
 MediaSessionManager* MediaSessionManager::createNew()
 {

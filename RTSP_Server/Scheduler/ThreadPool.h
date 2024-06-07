@@ -4,6 +4,9 @@
 #include <mutex>
 #include <queue>
 #include <vector>
+#include <functional>
+
+#include <memory>
 
 class Thread
 {
@@ -39,7 +42,7 @@ public:
 	class Task
 	{
 	public:
-		using TaskCallback = void(*)(void*);
+		using TaskCallback = std::function<void(void*)>;
 		Task()
 			:callback(nullptr)
 			,arg(nullptr)
