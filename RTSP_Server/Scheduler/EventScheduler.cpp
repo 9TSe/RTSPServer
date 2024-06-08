@@ -2,9 +2,10 @@
 #include "EpollPoller.h"
 #include "Event.h"
 
-EventScheduler* EventScheduler::createNew()
+
+std::shared_ptr<EventScheduler> EventScheduler::createNew()
 {
-	return new EventScheduler();
+	return std::make_shared<EventScheduler>();
 }
 
 EventScheduler::EventScheduler()

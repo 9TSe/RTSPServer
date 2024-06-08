@@ -4,12 +4,14 @@
 static inline bool startcode3(uint8_t* buf);
 static inline bool startcode4(uint8_t* buf);
 
-H264MediaSource* H264MediaSource::createNew(UsageEnvironment* env, const std::string& file)
+//std::shared_ptr<H264MediaSource> H264MediaSource::createNew(EnvPtr env, const std::string& file)
+H264MediaSource* H264MediaSource::createNew(EnvPtr env, const std::string& file)
 {
 	return new H264MediaSource(env, file);
+	//return std::make_shared<H264MediaSource>(env, file);
 }
 
-H264MediaSource::H264MediaSource(UsageEnvironment* env, const std::string& file)
+H264MediaSource::H264MediaSource(EnvPtr env, const std::string& file)
 	:MediaSource(env)
 {
 	m_sourcename = file;

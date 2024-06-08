@@ -2,12 +2,14 @@
 #include <string.h>
 #include "../Scheduler/Log.h"
 
-AACMediaSource* AACMediaSource::createNew(UsageEnvironment* env, const std::string& file)
+//std::shared_ptr<AACMediaSource> AACMediaSource::createNew(EnvPtr env, const std::string& file)
+AACMediaSource* AACMediaSource::createNew(EnvPtr env, const std::string& file)
 {
+	//return std::make_shared<AACMediaSource>(env, file);
 	return new AACMediaSource(env, file);
 }
 
-AACMediaSource::AACMediaSource(UsageEnvironment* env, const std::string& file)
+AACMediaSource::AACMediaSource(EnvPtr env, const std::string& file)
 	:MediaSource(env)
 {
 	m_sourcename = file;

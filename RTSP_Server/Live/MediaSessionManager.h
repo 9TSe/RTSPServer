@@ -1,16 +1,18 @@
 #pragma once
 #include <map>
+#include <memory>
 #include <string>
 
 class MediaSession;
 class MediaSessionManager
 {
 public:
+	using Ptr = std::shared_ptr<MediaSessionManager>;
+	static Ptr createNew();
 	MediaSessionManager();
 	~MediaSessionManager();
-	static MediaSessionManager* createNew();
+	bool addSession(std::shared_ptr<MediaSession> session);
 
-	bool addSession(MediaSession* session);
 	bool removeSession(MediaSession* session);
 	MediaSession* getSession(const std::string& name);
 

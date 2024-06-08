@@ -18,7 +18,7 @@ public:
 	};
 	using SessionSendPacketCallback = std::function<void(void* arg1, void* arg2, void* packet, PacketType type)>;
 
-	explicit Sink(UsageEnvironment* env, MediaSource* source, int payloadtype);
+	explicit Sink(std::shared_ptr<UsageEnvironment> env, MediaSource* source, int payloadtype);
 	virtual ~Sink();
 	void setSessionCallback(SessionSendPacketCallback callback, void* arg1, void* arg2);
 
@@ -34,7 +34,7 @@ private:
 	void handleTimeout();
 
 protected:
-	UsageEnvironment* m_env;
+	std::shared_ptr<UsageEnvironment> m_env;
 	MediaSource* m_mediaSource;
 
 	uint8_t m_csrcLen : 4;

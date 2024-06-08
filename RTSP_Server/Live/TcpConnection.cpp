@@ -29,6 +29,7 @@ void TcpConnection::setDisConnectCallback(DisConnectCallback callback, void* arg
 
 void TcpConnection::handleDisconnect()
 {
+	LOGI("disconnect handle");
 	if (m_disconCallback)
 		m_disconCallback(m_arg, m_fd);
 }

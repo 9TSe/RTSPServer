@@ -1,11 +1,11 @@
 #include "AACSink.h"
 
-AACSink* AACSink::createNew(UsageEnvironment* env, MediaSource* source)
+AACSink* AACSink::createNew(std::shared_ptr<UsageEnvironment> env, MediaSource* source)
 {
 	return new AACSink(env, source);
 }
 
-AACSink::AACSink(UsageEnvironment* env, MediaSource* source)
+AACSink::AACSink(std::shared_ptr<UsageEnvironment> env, MediaSource* source)
 	:Sink(env, source, RTP_PAYLOAD_TYPE_AAC)
 	,m_sampleRate(44100)
 	, m_channel(2)

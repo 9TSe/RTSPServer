@@ -30,7 +30,8 @@ public:
 class MediaSource
 {
 public:
-	explicit MediaSource(UsageEnvironment* env);
+	using EnvPtr = std::shared_ptr<UsageEnvironment>;
+	explicit MediaSource(EnvPtr env);
 	virtual ~MediaSource();
 
 	int getFps() { return m_fps; }
@@ -45,7 +46,7 @@ private:
 	static void taskCallback(void* arg);
 
 protected:
-	UsageEnvironment* m_env;
+	EnvPtr m_env;
 	std::mutex m_mutex;
 	ThreadPool::Task m_task;
 	MediaFrame m_frames[FRAME_DEFAULT_NUM];

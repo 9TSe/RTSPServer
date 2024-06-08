@@ -5,6 +5,7 @@
 #include <queue>
 #include <vector>
 #include <functional>
+#include <atomic>
 
 #include <memory>
 
@@ -31,10 +32,10 @@ private:
 };
 
 
-class ThreadPool
+class ThreadPool //: public std::enable_shared_from_this<ThreadPool>
 {
 public:
-	static ThreadPool* createNew(int num);
+	static std::shared_ptr<ThreadPool> createNew(int num);
 	explicit ThreadPool(int num);
 	~ThreadPool();
 	
@@ -85,5 +86,5 @@ private:
 	std::condition_variable m_condition;
 	std::queue<Task> m_taskqueue;
 	std::vector<M_Thread> m_threads;
-	bool m_quit;
+	std::atomic_bool m_quit;
 };

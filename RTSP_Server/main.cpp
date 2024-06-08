@@ -20,16 +20,16 @@ int main()
 	*/
 	srand(time(nullptr));
 
-	EventScheduler* scheduler = EventScheduler::createNew();
-	ThreadPool* threadpool = ThreadPool::createNew(1);
-	UsageEnvironment* env = UsageEnvironment::createNew(threadpool, scheduler);
+	auto scheduler = EventScheduler::createNew();
+	auto threadpool = ThreadPool::createNew(1);
+	auto env = UsageEnvironment::createNew(std::move(threadpool), std::move(scheduler));
 
 	IPV4Address rtspaddr("127.0.0.1", 8554);
-	MediaSessionManager* sessionmanager = MediaSessionManager::createNew();
-	RtspServer* rtspserver = RtspServer::createNew(env, sessionmanager, rtspaddr);
+	auto sessionmanager = MediaSessionManager::createNew();
+	auto rtspserver = RtspServer::createNew(env, sessionmanager, rtspaddr);
 
 	LOGI("---session init---");
-	MediaSession* mediasession = MediaSession::createNew("test");
+	auto mediasession = MediaSession::createNew("test");
 	MediaSource* source = H264MediaSource::createNew(env, R"(/home/ninetse/avsource/miku2.h264)");
 	Sink* sink = H264Sink::createNew(env, source);
 	mediasession->addSink(MediaSession::TRACK_ID0, sink);
@@ -44,12 +44,6 @@ int main()
 	rtspserver->start();
 	env->eventScheduler()->start();
 	
-	delete scheduler;
-	delete threadpool;
-	delete env;
-	delete sessionmanager;
-	delete rtspserver;
-	delete mediasession;
 	delete source;
 	delete sink;
 	return 0;

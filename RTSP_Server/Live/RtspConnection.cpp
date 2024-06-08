@@ -237,7 +237,7 @@ bool RtspConnection::handleOption()
 		"RTSP/1.0 200 OK\r\n"
 		"CSeq: %u\r\n"
 		//"Public: DESCRIBE, ANNOUNCE, SETUP, PLAY, RECORD, PAUSE, GET_PARAMETER, TEARDOWN\r\n"
-		"Public: DESCRIBE, SETUP, PLAY\r\n"
+		"Public: DESCRIBE, SETUP, PLAY, TEARDOWN\r\n"
 		"Server: %s\r\n"
 		"\r\n", m_cseq, RTSPVERSION);
 	if (sendMessage(m_buffer, strlen(m_buffer)) < 0) return false;
@@ -400,6 +400,7 @@ bool RtspConnection::handlePlay()
 
 bool RtspConnection::handleTeardown()
 {
+	LOGI("Tear Down been trigge");
 	snprintf(m_buffer, sizeof(m_buffer),
 		"RTSP/1.0 200 OK\r\n"
 		"CSeq: %d\r\n"

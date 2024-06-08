@@ -5,8 +5,8 @@
 class H264Sink : public Sink
 {
 public:
-	static H264Sink* createNew(UsageEnvironment* env, MediaSource* source);
-	H264Sink(UsageEnvironment* env, MediaSource* source);
+	static H264Sink* createNew(std::shared_ptr<UsageEnvironment> env, MediaSource* source);
+	H264Sink(std::shared_ptr<UsageEnvironment> env, MediaSource* source);
 	virtual ~H264Sink();
 
 	virtual std::string getMediaDescription(uint16_t port);

@@ -1,6 +1,7 @@
 #pragma once
 #include <mutex>
 #include <vector>
+#include <memory>
 #include "Timer.h"
 #include "EpollPoller.h"
 
@@ -10,12 +11,12 @@ class EpollPoller;
 class TimerManager;
 class TriggerEvent;
 
-class EventScheduler
+class EventScheduler //: public std::enable_shared_from_this<EventScheduler>
 {
 public:
 	explicit EventScheduler();
 	~EventScheduler();
-	static EventScheduler* createNew();
+	static std::shared_ptr<EventScheduler> createNew();
 
 	bool addIOEvent(IOEvent* event) { return m_epoll->addIOEvent(event); }
 	bool updateIOEvent(IOEvent* event) { return m_epoll->updateIOEvent(event); }

@@ -2,6 +2,7 @@
 #include <mutex>
 #include <vector>
 #include <map>
+#include <memory>
 #include "InetAddress.h"
 
 
@@ -12,14 +13,16 @@ class MediaSessionManager;
 class UsageEnvironment;
 class RtspConnection;
 
-class RtspServer
+class RtspServer : public std::enable_shared_from_this<RtspServer>
 {
 public:
-	RtspServer(UsageEnvironment* env, MediaSessionManager* ssmgr, IPV4Address& addr);
+	using EnvPtr = std::shared_ptr<UsageEnvironment>;
+	using ManPtr = std::shared_ptr<MediaSessionManager>;
+	RtspServer(EnvPtr env, ManPtr ssmgr, IPV4Address& addr);
 	~RtspServer();
-	static RtspServer* createNew(UsageEnvironment* env, MediaSessionManager* ssmgr, IPV4Address& addr);
+	static std::shared_ptr<RtspServer> createNew(EnvPtr env, ManPtr ssmgr, IPV4Address& addr);
 	void start();
-	UsageEnvironment* getEnv() const { return m_env; }
+	UsageEnvironment* getEnv() const { return m_env.get(); }
 private:
 	static void readCallback(void* arg);
 	void handleRead();
@@ -29,10 +32,10 @@ private:
 	void handleCloseConnect();
 
 public:
-	MediaSessionManager* m_ssmgr;
+	ManPtr m_ssmgr;
 
 private:
-	UsageEnvironment* m_env;
+	EnvPtr m_env;
 	IPV4Address m_addr;
 	bool m_listen;
 	int m_fd;

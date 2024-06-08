@@ -8,13 +8,14 @@ constexpr int MAX_TRACK_NUM = 2;
 class MediaSession
 {
 public:
+	using SesPtr = std::shared_ptr<MediaSession>;
 	enum TrackId
 	{
 		TRACK_IDNONE = -1,
 		TRACK_ID0 = 0,
 		TRACK_ID1 = 1
 	};
-	static MediaSession* createNew(std::string name);
+	static SesPtr createNew(const std::string name);
 	MediaSession(const std::string& name);
 	~MediaSession();
 

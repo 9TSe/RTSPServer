@@ -7,18 +7,18 @@ MediaSessionManager::~MediaSessionManager()
 	LOGI("~MediaSessionManager()");
 }
 
-MediaSessionManager* MediaSessionManager::createNew()
+std::shared_ptr<MediaSessionManager> MediaSessionManager::createNew()
 {
-	return new MediaSessionManager();
+	return std::make_shared<MediaSessionManager>();
 }
 
-bool MediaSessionManager::addSession(MediaSession* session)
+bool MediaSessionManager::addSession(std::shared_ptr<MediaSession> session)
 {
 	auto it = m_sessions.find(session->sessionName());
 	if (it != m_sessions.end()) return false;
 	else
 	{
-		m_sessions.insert(std::make_pair(session->sessionName(), session));
+		m_sessions.insert(std::make_pair(session->sessionName(), session.get()));
 		return true;
 	}
 }

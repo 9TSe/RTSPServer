@@ -5,8 +5,10 @@
 class AACMediaSource : public MediaSource
 {
 public:
-	static AACMediaSource* createNew(UsageEnvironment* env, const std::string& file);
-	AACMediaSource(UsageEnvironment* env, const std::string& file);
+	using ASPtr = std::shared_ptr<AACMediaSource>;
+	//static ASPtr createNew(EnvPtr env, const std::string& file);
+	static AACMediaSource* createNew(EnvPtr env, const std::string& file);
+	AACMediaSource(EnvPtr env, const std::string& file);
 	virtual ~AACMediaSource();
 
 protected:

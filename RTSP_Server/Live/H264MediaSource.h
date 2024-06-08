@@ -5,9 +5,11 @@
 class H264MediaSource : public MediaSource
 {
 public:
-	H264MediaSource(UsageEnvironment* env, const std::string& file);
+	using HSPtr = std::shared_ptr<H264MediaSource>;
+	H264MediaSource(EnvPtr env, const std::string& file);
 	virtual ~H264MediaSource();
-	static H264MediaSource* createNew(UsageEnvironment* env, const std::string& file);
+	//static HSPtr createNew(EnvPtr env, const std::string& file);
+	static H264MediaSource* createNew(EnvPtr env, const std::string& file);
 
 protected:
 	virtual void handleTask();

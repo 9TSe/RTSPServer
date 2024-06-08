@@ -1,7 +1,7 @@
 #include "MediaSource.h"
 #include "../Scheduler/Log.h"
 
-MediaSource::MediaSource(UsageEnvironment* env)
+MediaSource::MediaSource(EnvPtr env)
 	:m_env(env)
 	,m_fps(0)
 {

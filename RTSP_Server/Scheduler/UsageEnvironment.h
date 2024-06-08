@@ -1,18 +1,19 @@
 #pragma once
+#include <memory>
 class ThreadPool;
 class EventScheduler;
 
 
-class UsageEnvironment
+class UsageEnvironment //: public std::enable_shared_from_this<UsageEnvironment>
 {
 public:
-	UsageEnvironment(ThreadPool* threadpool, EventScheduler* scheduler);
+	UsageEnvironment(std::shared_ptr<ThreadPool>&& threadpool, std::shared_ptr<EventScheduler>&& scheduler);
 	~UsageEnvironment();
 
-	static UsageEnvironment* createNew(ThreadPool* threadpool, EventScheduler* scheduler);
-	ThreadPool* threadPool() { return m_threadpool; }
-	EventScheduler* eventScheduler() { return m_eventscheduler; }
+	static std::shared_ptr<UsageEnvironment> createNew(std::shared_ptr<ThreadPool>&& threadpool, std::shared_ptr<EventScheduler>&& scheduler);
+	ThreadPool* threadPool() { return m_threadpool.get(); }
+	EventScheduler* eventScheduler() { return m_eventscheduler.get(); }
 private:
-	ThreadPool* m_threadpool;
-	EventScheduler* m_eventscheduler;
+	std::shared_ptr<ThreadPool> m_threadpool;
+	std::shared_ptr<EventScheduler> m_eventscheduler;
 };

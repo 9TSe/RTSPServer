@@ -7,12 +7,12 @@
 #include "SocketOps.h"
 #include "RtspConnection.h"
 
-RtspServer* RtspServer::createNew(UsageEnvironment* env, MediaSessionManager* ssmgr, IPV4Address& addr)
+std::shared_ptr<RtspServer> RtspServer::createNew(EnvPtr env, ManPtr ssmgr, IPV4Address& addr)
 {
-	return new RtspServer(env, ssmgr, addr);
+	return std::make_shared<RtspServer>(env, ssmgr, addr);
 }
 
-RtspServer::RtspServer(UsageEnvironment* env, MediaSessionManager* ssmgr, IPV4Address& addr)
+RtspServer::RtspServer(EnvPtr env, ManPtr ssmgr, IPV4Address& addr)
 	:m_env(env)
 	,m_ssmgr(ssmgr)
 	,m_addr(addr)

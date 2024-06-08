@@ -4,8 +4,8 @@
 class AACSink : public Sink
 {
 public:
-	static AACSink* createNew(UsageEnvironment* env, MediaSource* source);
-	AACSink(UsageEnvironment* env, MediaSource* source);
+	static AACSink* createNew(std::shared_ptr<UsageEnvironment> env, MediaSource* source);
+	AACSink(std::shared_ptr<UsageEnvironment> env, MediaSource* source);
 	virtual ~AACSink();
 
 	virtual std::string getMediaDescription(uint16_t port);

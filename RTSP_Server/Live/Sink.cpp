@@ -3,7 +3,7 @@
 #include "../Scheduler/EventScheduler.h"
 #include <arpa/inet.h>
 
-Sink::Sink(UsageEnvironment* env, MediaSource* source, int payloadType)
+Sink::Sink(std::shared_ptr<UsageEnvironment> env, MediaSource* source, int payloadType)
 	:m_env(env)
 	, m_mediaSource(source)
 	, m_csrcLen(0)

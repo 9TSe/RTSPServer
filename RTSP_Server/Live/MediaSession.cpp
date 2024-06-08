@@ -3,9 +3,9 @@
 #include <algorithm>
 #include <assert.h>
 
-MediaSession* MediaSession::createNew(std::string name)
+std::shared_ptr<MediaSession> MediaSession::createNew(const std::string name)
 {
-	return new MediaSession(name);
+	return std::make_shared<MediaSession>(name);
 }
 
 MediaSession::MediaSession(const std::string& name)

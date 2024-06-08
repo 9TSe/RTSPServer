@@ -42,6 +42,7 @@ private:
 
 private:
 	char* m_buffer;
+	//std::shared_ptr<char> m_buffer;
 	int m_buffersize;
 	int m_readindex; 
 	int m_writeindex;

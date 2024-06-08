@@ -49,9 +49,9 @@ void* Thread::threadRun(void* arg)
 
 
 
-ThreadPool* ThreadPool::createNew(int num)
+std::shared_ptr<ThreadPool> ThreadPool::createNew(int num)
 {
-	return new ThreadPool(num);
+	return std::make_shared<ThreadPool>(num);
 }
 
 ThreadPool::ThreadPool(int num)

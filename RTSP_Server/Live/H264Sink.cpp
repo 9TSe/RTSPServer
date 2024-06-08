@@ -1,12 +1,12 @@
 #include "H264Sink.h"
 
-H264Sink* H264Sink::createNew(UsageEnvironment* env, MediaSource* source)
+H264Sink* H264Sink::createNew(std::shared_ptr<UsageEnvironment> env, MediaSource* source)
 {
 	if (!source) return nullptr;
 	return new H264Sink(env, source);
 }
 
-H264Sink::H264Sink(UsageEnvironment* env, MediaSource* source)
+H264Sink::H264Sink(std::shared_ptr<UsageEnvironment> env, MediaSource* source)
 	:Sink(env, source, RTP_PAYLOAD_TYPE_H264)
 	, m_clockRate(90000)
 	, m_fps(source->getFps())

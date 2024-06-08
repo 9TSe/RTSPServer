@@ -6,6 +6,7 @@ const int Buffer::initialsize = 1024;
 const char* Buffer::m_kCRLF = "\r\n";
 
 Buffer::Buffer()
+	//:m_buffer(new char[initialsize], std::default_delete<char[]>())
 	:m_buffersize(initialsize)
 	,m_readindex(0)
 	, m_writeindex(0)
@@ -66,6 +67,7 @@ void Buffer::makeSpace(int len)
 	{
 		m_buffersize = m_writeindex + len;
 		m_buffer = (char*)realloc(m_buffer, m_buffersize);
+		//m_buffer.reset(new char[m_buffersize]);
 		if (!m_buffer)
 		{
 			LOGE("realloc error");
