@@ -30,10 +30,11 @@ bool Timer::handleEvent()
 
 Timer::TimeStamp Timer::getCurTime() //for compute "func" use time, could use twice to achive
 {
-	//return std::chrono::steady_clock::now().time_since_epoch().count();
-	timespec now;
+	long long now =  std::chrono::steady_clock::now().time_since_epoch().count();
+	return now / 1000000;
+	/*timespec now;
 	clock_gettime(CLOCK_MONOTONIC, &now);
-	return (now.tv_sec * 1000 + now.tv_nsec / 1000000);
+	return (now.tv_sec * 1000 + now.tv_nsec / 1000000);*/
 }
 
 

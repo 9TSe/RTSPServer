@@ -163,17 +163,19 @@ bool RtspConnection::parseSetup(std::string& message)
 		}
 		else if ((pos = message.find("RTP/AVP")) != std::string::npos)
 		{
+			uint16_t rtpport, rtcpport;
 			if (message.find("unicast", pos) != std::string::npos)
 			{
-				uint16_t rtpport, rtcpport;
-				if (sscanf(message.c_str() + pos, "%*[^;];%*[^;];%*[^=]=%hu-%hu", &rtpport, &rtcpport) != 2) return false;
-				else if ((message.find("multicast", pos)) != std::string::npos) return true; //multicast
-				else return false;
-				m_peerRtpPort = rtpport;
-				m_peerRtcpPort = rtcpport;
+				if (sscanf(message.c_str() + pos, "%*[^;];%*[^;];%*[^=]=%hu-%hu", &rtpport, &rtcpport) != 2) 
+					return false;
 			}
+			else if ((message.find("multicast", pos)) != std::string::npos) return true; //multicast
+			else return false;
+			m_peerRtpPort = rtpport;
+			m_peerRtcpPort = rtcpport;
 		}
 		else return false;
+		return true;
 	}
 	return false;
 }
@@ -237,7 +239,7 @@ bool RtspConnection::handleOption()
 		"RTSP/1.0 200 OK\r\n"
 		"CSeq: %u\r\n"
 		//"Public: DESCRIBE, ANNOUNCE, SETUP, PLAY, RECORD, PAUSE, GET_PARAMETER, TEARDOWN\r\n"
-		"Public: DESCRIBE, SETUP, PLAY, TEARDOWN\r\n"
+		"Public: DESCRIBE, SETUP, PLAY\r\n"
 		"Server: %s\r\n"
 		"\r\n", m_cseq, RTSPVERSION);
 	if (sendMessage(m_buffer, strlen(m_buffer)) < 0) return false;
@@ -369,7 +371,7 @@ bool RtspConnection::handleSetup()
 				"RTSP/1.0 200 OK\r\n"
 				"CSeq: %d\r\n"
 				"Server: %s\r\n"
-				"Transport: RTP/AVP;unicast;clientport=%hu-%hu;server=%hu-%hu\r\n"
+				"Transport: RTP/AVP;unicast;client_port=%hu-%hu;server_port=%hu-%hu\r\n"
 				"Session: %08x\r\n"
 				"\r\n", m_cseq, RTSPVERSION, m_peerRtpPort, m_peerRtcpPort,
 				m_rtpinstances[m_trackid]->getlocalport(), m_rtcpinstances[m_trackid]->getlocalport(),

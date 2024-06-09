@@ -21,7 +21,7 @@ int main()
 	srand(time(nullptr));
 
 	auto scheduler = EventScheduler::createNew();
-	auto threadpool = ThreadPool::createNew(1);
+	auto threadpool = ThreadPool::createNew(2);
 	auto env = UsageEnvironment::createNew(std::move(threadpool), std::move(scheduler));
 
 	IPV4Address rtspaddr("127.0.0.1", 8554);

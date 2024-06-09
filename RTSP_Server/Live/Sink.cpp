@@ -43,7 +43,7 @@ void Sink::handleTimeout()
 	MediaFrame* frame = m_mediaSource->getFrameFromQueue();
 	if (!frame) return;
 	this->sendFrame(frame);
-	m_mediaSource->putFrameToQueue(frame); //start a thread to read file into frame???
+	m_mediaSource->putFrameToQueue(frame);
 }
 
 void Sink::setSessionCallback(SessionSendPacketCallback callback, void* arg1, void* arg2)

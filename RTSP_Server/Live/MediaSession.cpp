@@ -122,9 +122,8 @@ std::string MediaSession::generateSdpDscription()
 
 	if (isStartMulticast())
 	{
-		/*snprintf(buf + strlen(buf), sizeof(buf) - strlen(buf),
-			"a=rtcp-unicast: reflection\r\n");*/
-		snprintf(buf + strlen(buf), sizeof(buf) - strlen(buf), "a=rtcp-multicast: multicast\r\n");
+		snprintf(buf + strlen(buf), sizeof(buf) - strlen(buf),
+			"a=rtcp-unicast: reflection\r\n");
 	}
 
 	for (int i = 0; i < MAX_TRACK_NUM; ++i)
@@ -139,8 +138,6 @@ std::string MediaSession::generateSdpDscription()
 
 		if (isStartMulticast())
 		{
-			/*snprintf(buf + strlen(buf), sizeof(buf) - strlen(buf),
-				"c=IN IP4 %s/255\r\n", getMulticastDestAddr().c_str());*/
 			snprintf(buf + strlen(buf), sizeof(buf) - strlen(buf), 
 				"c=IN IP4 %s/255\r\n", getMulticastDestAddr().c_str());
 		}

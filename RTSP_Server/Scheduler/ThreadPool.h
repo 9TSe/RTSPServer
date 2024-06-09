@@ -38,7 +38,6 @@ public:
 	static std::shared_ptr<ThreadPool> createNew(int num);
 	explicit ThreadPool(int num);
 	~ThreadPool();
-	
 
 	class Task
 	{

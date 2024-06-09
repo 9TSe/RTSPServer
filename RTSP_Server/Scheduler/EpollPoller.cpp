@@ -105,7 +105,7 @@ bool EpollPoller::removeIOEvent(IOEvent* event)
 
 void EpollPoller::handleEvent()
 {
-    int numEvents = epoll_wait(m_epollFd, &m_epollEvents[0], static_cast<int>(m_epollEvents.size()), 1000);
+    int numEvents = epoll_wait(m_epollFd, &m_epollEvents[0], static_cast<int>(m_epollEvents.size()), -1);
     if (numEvents < 0) 
     {
         LOGE("Error in epoll_wait");

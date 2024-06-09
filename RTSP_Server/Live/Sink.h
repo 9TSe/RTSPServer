@@ -49,6 +49,7 @@ protected:
 	SessionSendPacketCallback m_sessionsendCallback;
 	void* m_arg1;
 	void* m_arg2;
+
 private:
 	Timer::TimerId m_timeId;
 	TimerEvent* m_timeEvent;
