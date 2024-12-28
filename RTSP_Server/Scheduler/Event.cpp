@@ -1,11 +1,11 @@
 #include "Event.h"
-
+#include "Log.h"
 
 TriggerEvent::TriggerEvent(void* arg)
     : m_triggerCallback(nullptr)
     , m_arg(arg)
 {
-    LOGI("TriggerEvent()");
+    LOG_CORE_INFO("TriggerEvent()");
 }
 
 TriggerEvent* TriggerEvent::createNew()
@@ -20,7 +20,7 @@ TriggerEvent* TriggerEvent::createNew(void* arg)
 
 TriggerEvent::~TriggerEvent()
 {
-    LOGI("~TriggerEvent");
+    LOG_CORE_INFO("~TriggerEvent");
 }
 
 void TriggerEvent::handleEvent()
@@ -40,12 +40,12 @@ IOEvent::IOEvent(int fd, void* arg)
     , m_writeCallback(nullptr)
     , m_errorCallback(nullptr)
 {
-    LOGI("IOEvent(), m_fd = %d", m_fd);
+    LOG_CORE_INFO("IOEvent(), m_fd = %d", m_fd);
 }
 
 IOEvent::~IOEvent()
 {
-    LOGI("~IOEvent()");
+    LOG_CORE_INFO("~IOEvent()");
 }
 
 IOEvent* IOEvent::createNew(int fd, void* arg)
@@ -77,12 +77,12 @@ TimerEvent::TimerEvent(void* arg)
     , m_timeCallback(nullptr)
     , m_stop(false)
 {
-    LOGI("TimerEvent()");
+    LOG_CORE_INFO("TimerEvent()");
 }
 
 TimerEvent::~TimerEvent()
 {
-    LOGI("~TimerEvent()");
+    LOG_CORE_INFO("~TimerEvent()");
 }
 
 TimerEvent* TimerEvent::createNew(void* arg)
@@ -102,4 +102,73 @@ bool TimerEvent::handleEvent()
     if (m_timeCallback)
         m_timeCallback(m_arg);
     return false;
+}
+
+
+
+
+
+#include <boost/system/error_code.hpp>
+
+BoostIOEvent::BoostIOEvent(boost::asio::io_context& io_context, int fd)
+    : m_stream(io_context, fd),
+      m_readCallback(nullptr),
+      m_writeCallback(nullptr),
+      m_errorCallback(nullptr) {}
+
+BoostIOEvent::~BoostIOEvent() {
+    boost::system::error_code ec;
+    m_stream.close(ec);
+    if (ec) {
+        LOG_CORE_ERROR("Error closing stream: {}", ec.message());
+    }
+}
+
+void BoostIOEvent::setReadCallback(BoostEventCallback cb) {
+    m_readCallback = std::move(cb);
+}
+
+void BoostIOEvent::setWriteCallback(BoostEventCallback cb) {
+    m_writeCallback = std::move(cb);
+}
+
+void BoostIOEvent::setErrorCallback(BoostEventCallback cb) {
+    m_errorCallback = std::move(cb);
+}
+
+void BoostIOEvent::enableReadEvent() {
+    m_stream.async_read_some(
+        boost::asio::null_buffers(),
+        [this](const boost::system::error_code& ec, std::size_t /*bytes_transferred*/) {
+            if (ec) {
+                if (m_errorCallback) m_errorCallback();
+            } else {
+                if (m_readCallback) m_readCallback();
+            }
+        });
+}
+
+void BoostIOEvent::enableWriteEvent() {
+    m_stream.async_write_some(
+        boost::asio::null_buffers(),
+        [this](const boost::system::error_code& ec, std::size_t /*bytes_transferred*/) {
+            if (ec) {
+                if (m_errorCallback) m_errorCallback();
+            } else {
+                if (m_writeCallback) m_writeCallback();
+            }
+        });
+}
+
+void BoostIOEvent::disableReadEvent() {
+    m_stream.cancel();
+}
+
+void BoostIOEvent::disableWriteEvent() {
+    m_stream.cancel();
+}
+
+void BoostIOEvent::handleEvents() {
+    // Typically handled in the event loop of boost::asio::io_context
+    // No additional implementation needed here
 }

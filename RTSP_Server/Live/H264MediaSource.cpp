@@ -24,7 +24,7 @@ H264MediaSource::H264MediaSource(EnvPtr env, const std::string& file)
 
 H264MediaSource::~H264MediaSource()
 {
-	LOGI("~H264MediaSource()");
+	LOG_CORE_INFO("~H264MediaSource()");
 	m_istream.close();
 }
 
@@ -62,7 +62,7 @@ int H264MediaSource::getFrameFromH264(uint8_t* frame, int size)
 	if (!startcode3(frame) && !startcode4(frame))
 	{
 		m_istream.seekg(0, std::ios::beg);
-		LOGE("read error, %s not startcode", m_sourcename.c_str());
+		LOG_CORE_ERROR("read error, {} not startcode", m_sourcename.c_str());
 		return -1;
 	}
 
@@ -70,8 +70,8 @@ int H264MediaSource::getFrameFromH264(uint8_t* frame, int size)
 	int framesize = 0;
 	if (!nextstartcode)
 	{
-		m_istream.seekg(0, std::ios::beg);
-		LOGE("read error, %s not next startcode", m_sourcename.c_str());
+		m_istream.seekg(0, std::ios::beg); 
+		LOG_CORE_ERROR("read error, {} not next startcode", m_sourcename.c_str());
 		//framesize = ret;
 		return -1;
 	}

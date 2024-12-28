@@ -22,7 +22,7 @@ RtspServer::RtspServer(EnvPtr env, ManPtr ssmgr, IPV4Address& addr)
 	sockets::setAddreuse(m_fd, 1);
 	if (!sockets::bind(m_fd, addr.getIp(), addr.getPort()))
 		return;
-	LOGI("rtsp://%s:%d fd=%d", addr.getIp().data(), addr.getPort(), m_fd);
+	LOG_CORE_INFO("rtsp://{}:{} fd={}", addr.getIp().data(), addr.getPort(), m_fd);
 
 	m_acceptIOEvent = IOEvent::createNew(m_fd, this);
 	m_acceptIOEvent->setReadCallback(readCallback); 
@@ -34,7 +34,7 @@ RtspServer::RtspServer(EnvPtr env, ManPtr ssmgr, IPV4Address& addr)
 
 RtspServer::~RtspServer()
 {
-	LOGI("~RtspServer()");
+	LOG_CORE_INFO("~RtspServer()");
 	if (m_listen)
 		m_env->eventScheduler()->removeIOEvent(m_acceptIOEvent);
 	delete m_acceptIOEvent;
@@ -44,7 +44,7 @@ RtspServer::~RtspServer()
 
 void RtspServer::start()
 {
-	LOGI("RtspServer start()");
+	LOG_CORE_INFO("RtspServer start()");
 	sockets::listen(m_fd, 60);
 	m_listen = true;
 	m_env->eventScheduler()->addIOEvent(m_acceptIOEvent);
@@ -61,7 +61,7 @@ void RtspServer::handleRead()
 	int clientfd = sockets::accept(m_fd);
 	if (clientfd < 0)
 	{
-		LOGE("accept error");
+		LOG_CORE_ERROR("accept error");
 		return;
 	}
 	RtspConnection* conn = RtspConnection::createNew(this, clientfd);
@@ -102,7 +102,7 @@ void RtspServer::handleCloseConnect()
 		}
 		else
 		{
-			LOGE("close connect map not match with list");
+			LOG_CORE_ERROR("close connect map not match with list");
 			//return; //to ensure all connect will be cleared
 		}
 	}

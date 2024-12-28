@@ -32,6 +32,7 @@ private:
 
 private:
 	EpollPoller* m_epoll;
+	std::shared_ptr<BoostPoller> m_boostPoller;
 	TimerManager* m_timerManager;
 	std::vector<TriggerEvent*> m_triggerEvents;
 	bool m_quit;

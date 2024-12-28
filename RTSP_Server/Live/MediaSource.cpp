@@ -12,7 +12,7 @@ MediaSource::MediaSource(EnvPtr env)
 
 MediaSource::~MediaSource()
 {
-	LOGI("~MediaSource()");
+	LOG_CORE_INFO("~MediaSource()");
 }
 
 MediaFrame* MediaSource::getFrameFromQueue()

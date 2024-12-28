@@ -21,7 +21,7 @@ AACMediaSource::AACMediaSource(EnvPtr env, const std::string& file)
 
 AACMediaSource::~AACMediaSource()
 {
-	LOGI("~AACMediaSource()");
+	LOG_CORE_INFO("~AACMediaSource()");
 	m_istream.close();
 }
 
@@ -51,7 +51,7 @@ bool AACMediaSource::parseAdtsHeader(uint8_t* in, AdtsHeader* adtsheader)
 	}
 	else
 	{
-		LOGE("fail parse adtsheader, synword != 0xfff");
+		LOG_CORE_ERROR("fail parse adtsheader, synword != 0xfff");
 		return false;
 	}
 }
@@ -71,7 +71,7 @@ int AACMediaSource::getFrameFromAACFile(uint8_t* buf, int size)
 	if (!parseAdtsHeader(tmpbuf, &m_adtsHeader)) return -1;
 	if (m_adtsHeader.aac_frame_length > size)
 	{
-		LOGE("aac frame length > size");
+		LOG_CORE_ERROR("aac frame length > size");
 		return -1;
 	}
 
@@ -79,7 +79,7 @@ int AACMediaSource::getFrameFromAACFile(uint8_t* buf, int size)
 	m_istream.read(reinterpret_cast<char*>(buf + 7), m_adtsHeader.aac_frame_length - 7);
 	if (m_istream.gcount() < 0)
 	{
-		LOGE("read frame error");
+		LOG_CORE_ERROR("read frame error");
 		return -1;
 	}
 	return m_adtsHeader.aac_frame_length;

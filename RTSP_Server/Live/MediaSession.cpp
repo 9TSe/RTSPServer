@@ -12,7 +12,7 @@ MediaSession::MediaSession(const std::string& name)
 	:m_sessionname(name)
 	,m_isStart_multicast(false)
 {
-	LOGI("MediaSession() name = %s", name.data());
+	LOG_CORE_INFO("MediaSession() name = {}", name.data());
 	m_tracks[0].m_trackid = TRACK_ID0;
 	m_tracks[0].m_isalive = false;
 	m_tracks[1].m_trackid = TRACK_ID1;
@@ -27,7 +27,7 @@ MediaSession::MediaSession(const std::string& name)
 
 MediaSession::~MediaSession()
 {
-	LOGI("~MediaSession()");
+	LOG_CORE_INFO("~MediaSession()");
 	for (int i = 0; i < MAX_TRACK_NUM; ++i)
 	{
 		if (m_multicast_rtpinstances[i])

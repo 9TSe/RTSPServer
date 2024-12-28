@@ -27,7 +27,7 @@ bool sockets::bind(int fd, std::string ip, uint16_t port)
 
 	if (::bind(fd, (sockaddr*)&addr, sizeof(addr)) < 0)
 	{
-		LOGE("bind error");
+		LOG_CORE_ERROR("bind error");
 		return false;
 	}
 	return true;
@@ -37,7 +37,7 @@ bool sockets::listen(int fd, int num)
 {
 	if (::listen(fd, num) < 0)
 	{
-		LOGE("listen error");
+		LOG_CORE_ERROR("listen error");
 		return false;
 	}
 	return true;
@@ -69,7 +69,7 @@ int sockets::accept(int fd)
 	int connfd = ::accept(fd, (sockaddr*)&addr, &addr_len);
 	if (connfd < 0)
 	{
-		LOGE("accept error");
+		LOG_CORE_ERROR("accept error");
 		return 0;
 	}
 	setNoneblock_CloseOnExe(connfd);

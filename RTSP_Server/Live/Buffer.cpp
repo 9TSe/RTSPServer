@@ -70,7 +70,7 @@ void Buffer::makeSpace(int len)
 		//m_buffer.reset(new char[m_buffersize]);
 		if (!m_buffer)
 		{
-			LOGE("realloc error");
+			LOG_CORE_ERROR("realloc error");
 			return;
 		}
 	}

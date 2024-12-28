@@ -26,7 +26,7 @@ RtspConnection::RtspConnection(RtspServer* rtspserver, int clientfd)
 	,m_isRtpOverTcp(false)
 
 {
-	LOGI("RtspConnection() m_fd = %d", m_fd);
+	LOG_CORE_INFO("RtspConnection() m_fd = {}", m_fd);
 	for (int i = 0; i < MAX_TRACK_NUM; ++i)
 	{
 		m_rtpinstances[i] = nullptr;
@@ -37,7 +37,7 @@ RtspConnection::RtspConnection(RtspServer* rtspserver, int clientfd)
 
 RtspConnection::~RtspConnection()
 {
-	LOGI("~RtspConnection() m_fd = %d", m_fd);
+	LOG_CORE_INFO("~RtspConnection() m_fd = {}", m_fd);
 	for (int i = 0; i < MAX_TRACK_NUM; ++i)
 	{
 		if (m_rtpinstances[i])
@@ -71,13 +71,13 @@ void RtspConnection::handleRtpOverTcp()
 			{
 				Rtp rtp;
 				parseRtpHeader(buf + 4, &rtp);
-				LOGI("num = %d, rtpsize = %d", num, rtpsize);
+				LOG_CORE_INFO("num = {}, rtpsize = {}", num, rtpsize);
 			}
 			else if (channel == 1 || channel == 3)
 			{
 				RtcpHeader rtcpheader;
 				parseRtcpHeader(buf + 4, &rtcpheader);
-				LOGI("num = %d, rtcptype = %d, rtpsize = %d", num, rtcpheader.payloadtype, rtpsize);
+				LOG_CORE_INFO("num = {}, rtcptype = {}, rtpsize = {}", num, rtcpheader.payloadtype, rtpsize);
 			}
 			m_inputbuf.retrieve(bufsize);
 		}
@@ -226,7 +226,7 @@ end:
 
 int RtspConnection::sendMessage(void* buf, int size)
 {
-	LOGI("%s", (char*)buf);
+	LOG_CORE_INFO("{}", (char*)buf);
 	m_outputbuf.append(buf, size);
 	int ret = m_outputbuf.write(m_fd);
 	m_outputbuf.retrieveAll();
@@ -251,7 +251,7 @@ bool RtspConnection::handleDescribe()
 	MediaSession* session = m_rtspServer->m_ssmgr->getSession(m_suffix);
 	if (!session)
 	{
-		LOGE("in describe, cant find session: %s", m_suffix);
+		LOG_CORE_ERROR("in describe, cant find session: {}", m_suffix);
 		return false;
 	}
 	std::string sdp = session->generateSdpDscription();
@@ -323,7 +323,7 @@ bool RtspConnection::handleSetup()
 	MediaSession* session = m_rtspServer->m_ssmgr->getSession(sessionname);
 	if (!session)
 	{
-		LOGE("in setup, cant find session: %s", sessionname);
+		LOG_CORE_ERROR("in setup, cant find session: {}", sessionname);
 		return false;
 	}
 
@@ -361,7 +361,7 @@ bool RtspConnection::handleSetup()
 		{
 			if (!createRtpRtcpOverUdp(m_trackid, m_peerip, m_peerRtpPort, m_peerRtcpPort))
 			{
-				LOGE("createRtpRtcpOverUdp error");
+				LOG_CORE_ERROR("createRtpRtcpOverUdp error");
 				return false;
 			}
 			m_rtpinstances[m_trackid]->setSessionId(m_sessionid);
@@ -402,7 +402,7 @@ bool RtspConnection::handlePlay()
 
 bool RtspConnection::handleTeardown()
 {
-	LOGI("Tear Down been trigge");
+	LOG_CORE_INFO("Tear Down been trigge");
 	snprintf(m_buffer, sizeof(m_buffer),
 		"RTSP/1.0 200 OK\r\n"
 		"CSeq: %d\r\n"
@@ -424,7 +424,7 @@ void RtspConnection::handleReadBytes()
 	}
 	if (!parseRequest()) 
 	{
-		LOGE("parseRequest error");
+		LOG_CORE_ERROR("parseRequest error");
 		goto disconnect;
 	}
 

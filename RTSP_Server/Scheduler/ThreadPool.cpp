@@ -63,7 +63,7 @@ ThreadPool::ThreadPool(int num)
 
 ThreadPool::~ThreadPool()
 {
-	LOGI("~ThreadPool()");
+	LOG_CORE_INFO("~ThreadPool()");
 	cancleThread();
 }
 

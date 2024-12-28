@@ -11,13 +11,13 @@ H264Sink::H264Sink(std::shared_ptr<UsageEnvironment> env, MediaSource* source)
 	, m_clockRate(90000)
 	, m_fps(source->getFps())
 {
-	LOGI("H264Sink()");
+	LOG_CORE_INFO("H264Sink()");
 	runEvery(1000 / m_fps);
 }
 
 H264Sink::~H264Sink()
 {
-	LOGI("~H264Sink()");
+	LOG_CORE_INFO("~H264Sink()");
 }
 
 std::string H264Sink::getMediaDescription(uint16_t port)

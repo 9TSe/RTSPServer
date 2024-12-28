@@ -20,14 +20,14 @@ Sink::Sink(std::shared_ptr<UsageEnvironment> env, MediaSource* source, int paylo
 	, m_arg2(nullptr)
 	, m_timeId(0)
 {
-	LOGI("Sink()");
+	LOG_CORE_INFO("Sink()");
 	m_timeEvent = TimerEvent::createNew(this);
 	m_timeEvent->setTimerCallback(timeoutCallback);
 }
 
 Sink::~Sink()
 {
-	LOGI("~Sink()");
+	LOG_CORE_INFO("~Sink()");
 	delete m_timeEvent;
 	delete m_mediaSource;
 }

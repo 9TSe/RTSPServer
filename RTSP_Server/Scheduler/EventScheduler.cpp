@@ -13,11 +13,12 @@ EventScheduler::EventScheduler()
 {
 	m_epoll = EpollPoller::createNew();
 	m_timerManager = TimerManager::createNew(this);
+	m_boostPoller = BoostPoller::createNew();
 }
 
 EventScheduler::~EventScheduler()
 {
-	LOGI("~EventScheduler");
+	LOG_CORE_INFO("~EventScheduler");
 	delete m_epoll;
 	delete m_timerManager;
 }

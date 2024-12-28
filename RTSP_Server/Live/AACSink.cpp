@@ -11,14 +11,14 @@ AACSink::AACSink(std::shared_ptr<UsageEnvironment> env, MediaSource* source)
 	, m_channel(2)
 	,m_fps(source->getFps())
 {
-	LOGI("AACSink()");
+	LOG_CORE_INFO("AACSink()");
 	m_marker = 1;
 	runEvery(1000 / m_fps);
 }
 
 AACSink::~AACSink()
 {
-	LOGI("~AACSink()");
+	LOG_CORE_INFO("~AACSink()");
 }
 
 std::string AACSink::getMediaDescription(uint16_t port)

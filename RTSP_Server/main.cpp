@@ -18,6 +18,7 @@ int main()
 	//udp
 	ffplay -i rtsp://127.0.0.1:8554/test
 	*/
+	spdLog::Log::Init();
 	srand(time(nullptr));
 
 	auto scheduler = EventScheduler::createNew();
@@ -28,7 +29,7 @@ int main()
 	auto sessionmanager = MediaSessionManager::createNew();
 	auto rtspserver = RtspServer::createNew(env, sessionmanager, rtspaddr);
 
-	LOGI("---session init---");
+	LOG_CORE_INFO("---session init---");
 	auto mediasession = MediaSession::createNew("test");
 	MediaSource* source = H264MediaSource::createNew(env, R"(/home/ninetse/avsource/miku2.h264)");
 	Sink* sink = H264Sink::createNew(env, source);
@@ -38,8 +39,9 @@ int main()
 	sink = AACSink::createNew(env, source);
 	mediasession->addSink(MediaSession::TRACK_ID1, sink);
 
+	// mediasession->startMulticast(); //多播
 	sessionmanager->addSession(mediasession);
-	LOGI("---session end---");
+	LOG_CORE_INFO("---session end---");
 
 	rtspserver->start();
 	env->eventScheduler()->start();

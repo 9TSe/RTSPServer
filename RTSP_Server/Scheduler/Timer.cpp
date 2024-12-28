@@ -50,7 +50,7 @@ static bool timerFdSetTime(int fd, Timer::TimeStamp stamp, Timer::TimeInterval i
 	if (tmp < 0)
 	{
 		return false;
-		LOGE("timerfd settime error");
+		LOG_CORE_ERROR("timerfd settime error");
 	}
 	return true;
 }
@@ -62,11 +62,11 @@ TimerManager::TimerManager(EventScheduler* scheduler)
 	m_timerFd = timerfd_create(CLOCK_MONOTONIC, TFD_CLOEXEC | TFD_NONBLOCK);
 	if (m_timerFd < 0)
 	{
-		LOGE("timerfd create fail");
+		LOG_CORE_ERROR("timerfd create fail");
 		return;
 	}
 	else
-		LOGI("m_timerfd = %d", m_timerFd);
+		LOG_CORE_INFO("m_timerfd = %d", m_timerFd);
 
 	m_timeIOevent = IOEvent::createNew(m_timerFd, this);
 	m_timeIOevent->setReadCallback(readCallback);

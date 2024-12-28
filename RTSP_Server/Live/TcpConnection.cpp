@@ -29,7 +29,7 @@ void TcpConnection::setDisConnectCallback(DisConnectCallback callback, void* arg
 
 void TcpConnection::handleDisconnect()
 {
-	LOGI("disconnect handle");
+	LOG_CORE_INFO("disconnect handle");
 	if (m_disconCallback)
 		m_disconCallback(m_arg, m_fd);
 }
@@ -45,7 +45,7 @@ void TcpConnection::handleRead()
 	int ret = m_inputbuf.read(m_fd);
 	if (ret < 0)
 	{
-		LOGE("tcpconnection read error m_fd = %d", m_fd);
+		LOG_CORE_ERROR("tcpconnection read error m_fd = {}", m_fd);
 		handleDisconnect();
 		return;
 	}
@@ -54,6 +54,6 @@ void TcpConnection::handleRead()
 
 void TcpConnection::handleReadBytes()
 {
-	LOGI("handleReadBytes");
+	LOG_CORE_INFO("handleReadBytes");
 	m_inputbuf.retrieveAll();
 }

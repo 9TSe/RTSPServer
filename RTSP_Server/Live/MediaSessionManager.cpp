@@ -4,7 +4,7 @@
 MediaSessionManager::MediaSessionManager(){}
 MediaSessionManager::~MediaSessionManager()
 {
-	LOGI("~MediaSessionManager()");
+	LOG_CORE_INFO("~MediaSessionManager()");
 }
 
 std::shared_ptr<MediaSessionManager> MediaSessionManager::createNew()
