@@ -88,28 +88,28 @@ private:
 
 
 
-#include <boost/asio.hpp>
-#include <functional>
-using BoostEventCallback = std::function<void()>;
-class BoostIOEvent {
-public:
-    BoostIOEvent(boost::asio::io_context& io_context, int fd);
-    ~BoostIOEvent();
+// #include <boost/asio.hpp>
+// #include <functional>
+// using BoostEventCallback = std::function<void()>;
+// class BoostIOEvent {
+// public:
+//     BoostIOEvent(boost::asio::io_context& io_context, int fd);
+//     ~BoostIOEvent();
 
-    void setReadCallback(BoostEventCallback cb);
-    void setWriteCallback(BoostEventCallback cb);
-    void setErrorCallback(BoostEventCallback cb);
+//     void setReadCallback(BoostEventCallback cb);
+//     void setWriteCallback(BoostEventCallback cb);
+//     void setErrorCallback(BoostEventCallback cb);
 
-    void enableReadEvent();
-    void enableWriteEvent();
-    void disableReadEvent();
-    void disableWriteEvent();
+//     void enableReadEvent();
+//     void enableWriteEvent();
+//     void disableReadEvent();
+//     void disableWriteEvent();
 
-    void handleEvents();
+//     void handleEvents();
 
-private:
-    boost::asio::posix::stream_descriptor m_stream;
-    BoostEventCallback m_readCallback;
-    BoostEventCallback m_writeCallback;
-    BoostEventCallback m_errorCallback;
-};
+// private:
+//     boost::asio::posix::stream_descriptor m_stream;
+//     BoostEventCallback m_readCallback;
+//     BoostEventCallback m_writeCallback;
+//     BoostEventCallback m_errorCallback;
+// };

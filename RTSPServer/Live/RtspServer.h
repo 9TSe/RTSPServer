@@ -5,7 +5,6 @@
 #include <memory>
 #include "InetAddress.h"
 
-
 class IOEvent;
 class TriggerEvent;
 class UsageEnvironment;
@@ -20,7 +19,7 @@ public:
 	using ManPtr = std::shared_ptr<MediaSessionManager>;
 	RtspServer(EnvPtr env, ManPtr ssmgr, IPV4Address& addr);
 	~RtspServer();
-	static std::shared_ptr<RtspServer> createNew(EnvPtr env, ManPtr ssmgr, IPV4Address& addr);
+	static std::unique_ptr<RtspServer> createNew(EnvPtr env, ManPtr ssmgr, IPV4Address& addr);
 	void start();
 	UsageEnvironment* getEnv() const { return m_env.get(); }
 private:

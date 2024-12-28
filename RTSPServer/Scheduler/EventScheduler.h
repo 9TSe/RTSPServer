@@ -10,13 +10,14 @@ class IOEvent;
 class EpollPoller;
 class TimerManager;
 class TriggerEvent;
+class BoostPoller;
 
-class EventScheduler //: public std::enable_shared_from_this<EventScheduler>
+class EventScheduler
 {
 public:
 	explicit EventScheduler();
 	~EventScheduler();
-	static std::shared_ptr<EventScheduler> createNew();
+	static std::unique_ptr<EventScheduler> createNew();
 
 	bool addIOEvent(IOEvent* event) { return m_epoll->addIOEvent(event); }
 	bool updateIOEvent(IOEvent* event) { return m_epoll->updateIOEvent(event); }
@@ -32,7 +33,6 @@ private:
 
 private:
 	EpollPoller* m_epoll;
-	std::shared_ptr<BoostPoller> m_boostPoller;
 	TimerManager* m_timerManager;
 	std::vector<TriggerEvent*> m_triggerEvents;
 	bool m_quit;

@@ -1,5 +1,6 @@
 .vs
-
+RTSPServer/build/
+RTSPServer/.vscode/
 cmake-build-debug/*
 x64/*
 windows/x64/*

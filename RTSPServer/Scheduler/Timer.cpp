@@ -66,7 +66,7 @@ TimerManager::TimerManager(EventScheduler* scheduler)
 		return;
 	}
 	else
-		LOG_CORE_INFO("m_timerfd = %d", m_timerFd);
+		LOG_CORE_INFO("m_timerfd = {}", m_timerFd);
 
 	m_timeIOevent = IOEvent::createNew(m_timerFd, this);
 	m_timeIOevent->setReadCallback(readCallback);

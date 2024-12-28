@@ -7,9 +7,10 @@
 #include "SocketOps.h"
 #include "RtspConnection.h"
 
-std::shared_ptr<RtspServer> RtspServer::createNew(EnvPtr env, ManPtr ssmgr, IPV4Address& addr)
+
+std::unique_ptr<RtspServer> RtspServer::createNew(EnvPtr env, ManPtr ssmgr, IPV4Address& addr)
 {
-	return std::make_shared<RtspServer>(env, ssmgr, addr);
+	return std::make_unique<RtspServer>(env, ssmgr, addr);
 }
 
 RtspServer::RtspServer(EnvPtr env, ManPtr ssmgr, IPV4Address& addr)

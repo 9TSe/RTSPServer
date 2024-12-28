@@ -3,9 +3,9 @@
 #include "Event.h"
 
 
-std::shared_ptr<EventScheduler> EventScheduler::createNew()
+std::unique_ptr<EventScheduler> EventScheduler::createNew()
 {
-	return std::make_shared<EventScheduler>();
+	return std::make_unique<EventScheduler>();
 }
 
 EventScheduler::EventScheduler()
@@ -13,7 +13,6 @@ EventScheduler::EventScheduler()
 {
 	m_epoll = EpollPoller::createNew();
 	m_timerManager = TimerManager::createNew(this);
-	m_boostPoller = BoostPoller::createNew();
 }
 
 EventScheduler::~EventScheduler()
